@@ -11,7 +11,7 @@ import unihandecode
 
 from .exc import LanguageNotFoundError
 from . import languages
-#from . import languages.default_language
+from . import languages.default_language
 
 try:
     import cPickle as pickle
