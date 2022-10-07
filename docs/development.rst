@@ -39,7 +39,7 @@ First, make sure the development dependencies are installed:
 
 .. code-block:: sh
 
-   $ pip install click remember logbook
+   $ pip install click logbook
 
 Afterwards, if you haven't done so, checkout the glibc-submodule:
 

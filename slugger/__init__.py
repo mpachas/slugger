@@ -1,11 +1,11 @@
 __version__ = '0.2.2.dev1'
 
 import bz2
+import functools
 import imp
 import re
 import sys
 
-from remember.memoize import memoize
 import pkg_resources
 import unihandecode
 
@@ -23,7 +23,7 @@ _MEMOIZE = 20
 _LANGCODE_RE = re.compile('^([a-z]+)(?:_([A-Z]+).*)?$')
 
 
-@memoize(_MEMOIZE)
+@functools.cache
 def _split_language(lang_code):
     m = _LANGCODE_RE.match(lang_code)
 
@@ -34,7 +34,7 @@ def _split_language(lang_code):
     return m.groups()
 
 
-@memoize(_MEMOIZE)
+@functools.cache
 def _load_language(lang):
     language, territory = _split_language(lang)
 

@@ -7,6 +7,7 @@ help.
 """
 
 import bz2
+import functools
 import os
 import sys
 try:
@@ -17,7 +18,6 @@ except ImportError:
 import click
 import logbook
 import logbook.more
-from remember.memoize import memoize
 
 from .tokenize import Tokenizer
 from .preprocess import Screener
@@ -31,7 +31,7 @@ def parse_translit(fn):
     return _parse_translit(os.path.normpath(os.path.abspath(fn)))
 
 
-@memoize(100)
+@functools.cache
 def _parse_translit(fn):
     with open(fn) as f:
         log.info("parse %s" % os.path.relpath(fn))

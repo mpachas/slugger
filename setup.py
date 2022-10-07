@@ -19,7 +19,7 @@ class locale_sdist(sdist):
         return sdist.run(self)
 
 
-devtools_req = ['click', 'remember', 'logbook', 'unihandecode>=0.50']
+devtools_req = ['click', 'logbook', 'unihandecode>=0.50']
 setup(name='slugger',
       version='0.2.3.dev1',
       description=('Slugging done right. Tries to support close to 300 '
@@ -30,7 +30,7 @@ setup(name='slugger',
       author_email='git@marcbrinkmann.de',
       url='http://github.com/mbr/slugger',
       license='LGPLv2.1',
-      install_requires=['remember', 'unihandecode>=0.50'],
+      install_requires=['unihandecode>=0.50',],
       package_data={
           'slugger': ['localedata/*'],
       },
