@@ -11,7 +11,7 @@ import unihandecode
 
 from .exc import LanguageNotFoundError
 from . import languages
-from . import languages.default_language
+from .languages import default_language
 
 try:
     import cPickle as pickle
@@ -151,16 +151,16 @@ class Slugger(object):
         try:
             self._lang = _load_language(lang)
         except LanguageNotFoundError:
-            self._lang = languages.default_language
+            self._lang = default_language
 
         self.substitution_tbl = getattr(
             self._lang, 'SUBSTITUTION',
-            languages.default_language.SUBSTITUTION
+            default_language.SUBSTITUTION
         )
 
         self.chain = getattr(
             self._lang, 'CHAIN',
-            languages.default_language.CHAIN)
+            default_language.CHAIN)
 
         if chain:
             self.chain = chain
