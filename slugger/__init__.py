@@ -102,10 +102,11 @@ def _load_ttbl(lang):
 
 
 @functools.cache
-def _compile_rpl_exp(tbl):
+def _compile_rpl_exp(language, tbl_name):
+    tbl = getattr(language, tbl_name)
     assert(tbl), "cannot compile empty table"
 
-    exp = re.compile(u'(%s)' % u'|'.join(re.escape(k) for k in tbl.iterkeys()))
+    exp = re.compile(u'(%s)' % u'|'.join(re.escape(k) for k in tbl))
 
     subf = lambda m: tbl[m.group(1)]
 
@@ -206,14 +207,14 @@ class Slugger(object):
 
     def init_subst(self):
         if self.substitution_tbl:
-            self.subst_sub = _compile_rpl_exp(self.substitution_tbl)
+            self.subst_sub = _compile_rpl_exp(self, 'substitution_tbl')
         else:
             self.subst_sub = lambda s: s
 
     def init_ttbl(self):
         # load translation table
         self.ttbl = _load_ttbl(self.lang)
-        self.ttbl_sub = _compile_rpl_exp(self.ttbl)
+        self.ttbl_sub = _compile_rpl_exp(self, 'ttbl')
 
     def init_unihandecode(self):
         if self.hanlang is None:
