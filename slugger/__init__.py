@@ -243,8 +243,7 @@ class Slugger(object):
 
         This will run the whole chain and return the end result of the
         transformation."""
-        title = unicode(title)
         for process in self.chain:
-            title = getattr(self, 'do_%s' % process)(title)
+            title = getattr(self, f'do_{process}')(title)
 
         return title
