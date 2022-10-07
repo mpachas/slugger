@@ -10,8 +10,8 @@ import pkg_resources
 import unihandecode
 
 from .exc import LanguageNotFoundError
-import languages
-import languages.default_language
+from . import languages
+#from . import languages.default_language
 
 try:
     import cPickle as pickle
