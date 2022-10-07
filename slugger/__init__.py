@@ -9,7 +9,7 @@ import sys
 import pkg_resources
 import unihandecode
 
-from exc import LanguageNotFoundError
+from .exc import LanguageNotFoundError
 import languages
 import languages.default_language
 
@@ -19,7 +19,6 @@ except ImportError:
     import pickle
 
 
-_MEMOIZE = 20
 _LANGCODE_RE = re.compile('^([a-z]+)(?:_([A-Z]+).*)?$')
 
 
@@ -71,7 +70,7 @@ def _load_language(lang):
     return mod
 
 
-@memoize(_MEMOIZE)
+@functools.cache
 def _load_ttbl(lang):
     language, territory = _split_language(lang)
 
@@ -102,7 +101,7 @@ def _load_ttbl(lang):
                                 lang)
 
 
-@memoize(_MEMOIZE)
+@functools.cache
 def _compile_rpl_exp(tbl):
     assert(tbl), "cannot compile empty table"
 
