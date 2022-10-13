@@ -46,7 +46,7 @@ def _parse_translit(fn):
 
         try:
             p.parse()
-        except LException, e:
+        except LException as e:
             log.critical("%s:%d.%d %s" % (
                 fn,
                 e.src.lineno,
@@ -92,6 +92,7 @@ def _main(loglevel, preprocess_only, output_dir, files, compress):
         log.info('Storing output in %s' % output_dir)
 
         for fn in files:
+            print('VOY A HACER UNO')
             if preprocess_only:
                 with open(fn) as f:
                     for c in Screener(f.read()):

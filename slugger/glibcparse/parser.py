@@ -13,7 +13,7 @@ class BaseParser(object):
         return self.tokenizer.colno
 
     def _expect(self, *args):
-        t = self.tokens.next()
+        t = next(self.tokens)
         if not args == t[:len(args)]:
             raise ParserError(self, 'Expected %s, got %s instead' %
                               (args, t))
@@ -34,7 +34,7 @@ class BlockParser(BaseParser):
         def _yield_until_end_of(blocktype):
             prev = None
             while True:
-                t = self.tokens.next()
+                t = next(self.tokens)
                 if ('KEYWORD', 'END') == t and ('EOL',) == prev:
                     self._expect('KEYWORD', blocktype)
                     self._expect('EOL')
@@ -81,7 +81,7 @@ class TranslitParser(BlockParser):
                 if inside_translit:
                     raise ParserError(self, 'copy inside translit section')
 
-                t_fn = token_iter.next()
+                t_fn = next(token_iter)
                 if not (t_fn[0], 'STRING'):
                     raise ParserError(self, 'expected filename to copy')
 
@@ -89,7 +89,7 @@ class TranslitParser(BlockParser):
                 self.log.info('copying file "%s"' % fn)
                 self.ttbl.update(self.parse_func(fn))
 
-                if not ('EOL',) == token_iter.next():
+                if not ('EOL',) == next(token_iter):
                     raise ParserError(self, 'garbage after copy')
                 continue
 
@@ -97,7 +97,7 @@ class TranslitParser(BlockParser):
                 if not inside_translit:
                     raise ParserError(self, 'include outside translit section')
 
-                t_fn = token_iter.next()
+                t_fn = next(token_iter)
                 if not (t_fn[0], 'STRING'):
                     raise ParserError(self, 'expected filename to copy')
 
@@ -105,7 +105,7 @@ class TranslitParser(BlockParser):
                 self.log.info('including file "%s"' % fn)
                 self.ttbl.update(self.parse_func(fn))
 
-                while token_iter.next() != ('EOL',):
+                while next(token_iter) != ('EOL',):
                     pass
                 continue
 
@@ -121,7 +121,7 @@ class TranslitParser(BlockParser):
 
             if ('KEYWORD', 'default_missing') == t:
                 self.log.debug('skipping default_missing')
-                while token_iter.next() != ('EOL',):
+                while next(token_iter) != ('EOL',):
                     pass
                 continue
 
@@ -134,7 +134,7 @@ class TranslitParser(BlockParser):
                     if ('SEMICOLON',) == t:
                         groups.append(current_group)
                         current_group = []
-                        t = token_iter.next()
+                        t = next(token_iter)
                         continue
 
                     if not 'STRING' == t[0]:
@@ -142,7 +142,7 @@ class TranslitParser(BlockParser):
                                                 'instead' % (t,))
                     current_group.append(t[1])
 
-                    t = token_iter.next()
+                    t = next(token_iter)
 
                 if current_group:
                     groups.append(current_group)

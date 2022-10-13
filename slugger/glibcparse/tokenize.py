@@ -1,9 +1,5 @@
 import re
-
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from StringIO import StringIO
+from io import StringIO
 
 from .exc import TokenizerError
 
@@ -19,7 +15,7 @@ _U_RE = re.compile('<U([0-9A-F]+)>')
 def _uni_sub(s):
     def _u_repl(m):
         code_point = int(m.group(1), 16)
-        return unichr(code_point)
+        return chr(code_point)
 
     return _U_RE.sub(_u_repl, s)
 
@@ -51,7 +47,7 @@ class Tokenizer(object):
 
     def __iter__(self):
         def _getch():
-            c = i.next()
+            c = next(i)
             if self.escape_char == c:
                 # drop escape chars
                 return _getch()
