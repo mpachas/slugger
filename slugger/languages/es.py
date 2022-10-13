@@ -1,5 +1,4 @@
 SUBSTITUTION = {
-    '@': 'arobase',
-    '&': 'et',
+    '&': 'y',
 }
 CHAIN = ['subst', 'ttbl', 'cleanup']

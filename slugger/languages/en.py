@@ -3,3 +3,4 @@ SUBSTITUTION = {
     '&': 'and',
     '\'': '',
 }
+CHAIN = ['subst', 'ttbl', 'cleanup']

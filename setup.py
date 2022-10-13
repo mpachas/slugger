@@ -21,14 +21,14 @@ class locale_sdist(sdist):
 
 devtools_req = ['click', 'logbook', 'unihandecode>=0.50']
 setup(name='slugger',
-      version='0.2.3.dev1',
+      version='0.3.0.dev1',
       description=('Slugging done right. Tries to support close to 300 '
                    'languages.'),
       long_description=read('README.rst'),
       keywords='slug slugging web i18n',
-      author='Marc Brinkmann',
-      author_email='git@marcbrinkmann.de',
-      url='http://github.com/mbr/slugger',
+      author='Marc Brinkmann', # Miguel Pachas
+      author_email='git@marcbrinkmann.de', 
+      url='http://github.com/mbr/slugger', #https://github.com/mpachas/slugger/
       license='LGPLv2.1',
       install_requires=['unihandecode>=0.50',],
       package_data={
@@ -45,8 +45,7 @@ setup(name='slugger',
           ]
       },
       classifiers=[
-          'Programming Language :: Python :: 2',
-          #'Programming Language :: Python :: 3',  # no python 3 support yet
+          'Programming Language :: Python :: 3',
       ],
       cmdclass={'sdist': locale_sdist},
       zip_safe=False,
