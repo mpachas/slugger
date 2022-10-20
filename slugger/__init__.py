@@ -20,6 +20,8 @@ except ImportError:
 
 
 _LANGCODE_RE = re.compile('^([a-z]+)(?:_([A-Z]+).*)?$')
+_UNIHANDECODE_LANGS = "ja", "vn", "kr", "zh", "yue"
+LANG_HANLANG_EQ = {"ja" : "ja", "vi" : "vn", "ko": "kr", "zh": "zh", "yue": "yue"}
 
 
 @functools.cache
@@ -220,19 +222,10 @@ class Slugger(object):
         if self.hanlang is None:
             # unihandecode will happily look for "en" codepoints, default to
             # a language we know is in unihandecode
-            hanlang = 'ja'
+            hanlang = LANG_HANLANG_EQ.get(self.lang.split('_')[0], "zh")
         else:
-            hanlang = self.hanlang or self.lang[0:2]
-
-            # work-around for annoying bugs in unihandecode
-            # author has been emailed
-            if hanlang == 'ja':
-                hanlang = "ja"
-            elif hanlang == 'kr':
-                hanlang = "kr"
-            elif hanlang == 'vn':
-                hanlang = "vn"
-
+            if hanlang not in _UNIHANDECODE_LANGS:
+                hanlang = "zh"
         self.unihandecoder = unihandecode.Unihandecoder(lang=hanlang)
 
     def init_cleanup(self):
