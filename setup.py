@@ -41,7 +41,7 @@ setup(name='slugger',
       },
       entry_points = {
           'console_scripts': [
-              'glcp = slugger.glibcparse.cli:main [devtools]',
+              #'glcp = slugger.glibcparse.cli:main [devtools]',
           ]
       },
       classifiers=[
