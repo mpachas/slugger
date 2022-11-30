@@ -1,2 +1,2 @@
 SUBSTITUTION = {}
-CHAIN = ['subst', 'ttbl', 'cleanup']
+CHAIN = ['subst', 'ttbl', 'unihandecode', 'cleanup']
