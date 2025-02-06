@@ -2,7 +2,7 @@ __version__ = '0.3.0.dev1'
 
 import bz2
 import functools
-import imp
+import importlib
 import re
 import sys
 
@@ -45,9 +45,9 @@ def _load_language(lang):
         if mod_name in sys.modules:
             return sys.modules[mod_name]
 
-        mod = imp.load_module(
+        mod = importlib.import_module(
             mod_name,
-            *imp.find_module(lang, languages.__path__)
+            importlib.util.find_spec(lang, languages.__path__)
         )
 
         return mod
