@@ -5,8 +5,8 @@ import functools
 import importlib
 import re
 import sys
+from importlib import resources
 
-import pkg_resources
 import unihandecode
 
 from .exc import LanguageNotFoundError
@@ -76,9 +76,9 @@ def _load_language(lang):
 def _load_ttbl(lang):
     language, territory = _split_language(lang)
 
-    language_resource = 'localedata/%s.ttbl' % language
-    full_resource = 'localedata/%s_%s.ttbl' % (language, territory)
-    fallback_resource = 'localedata/%s_%s.ttbl' % (language, language.upper())
+    language_resource = f'localedata/{language}.ttbl'
+    full_resource = f'localedata/{language}_{territory}.ttbl'
+    fallback_resource = f'localedata/{language}_{language.upper()}.ttbl'
 
     candidates = [
         full_resource + '.bz2',
@@ -90,8 +90,9 @@ def _load_ttbl(lang):
     ]
 
     for c in candidates:
-        if pkg_resources.resource_exists(__name__, c):
-            with pkg_resources.resource_stream(__name__, c) as f:
+        resource_path = resources.files(__name__).joinpath(c)
+        if resource_path.is_file():
+            with resource_path.open('rb') as f:
                 buf = f.read()
 
             if c.endswith('.bz2'):
